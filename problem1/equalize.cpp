@@ -1,15 +1,16 @@
+using namespace std;
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#include <cmath>
+#include <math.h>
 
 #include "figio.h"
 
-using namespace std;
+
 const unsigned int max_h = 10000;
 const unsigned int max_w = 10000;
-int w = 0;
-int h = 0;
+int w = max_w;
+int h = max_h;
 
 
 void grayscale(unsigned char* im_in, unsigned char* im_gray);
@@ -21,15 +22,18 @@ void equalized(unsigned char* im_in, unsigned char* equalized_im, unsigned char*
 
 int main(int argc, char* argv[]) {
   if (argc != 3) {
-	cerr << "Usage: " << argv[0] << "<input_file> <output_file>" << endl;
+	cerr << "Usage: " << argv[0] << " <input_file> <output_file>" << endl;
 	return 1;
   }
 
 
   unsigned char* im_in = new unsigned char[max_w*max_h*3];
+
+  
   
   if (!load_tiff(argv[1], im_in, w, h)) {
 	cout << "Could not read input file: " << argv[1] << endl;
+	cout << w << "," << h << endl;
 	return 1;
   }
 
@@ -87,9 +91,7 @@ void cdf(int* im_hist, double* im_cdf) {
 void equalized(unsigned char* im_gray, double* im_cdf, unsigned char* equalized_im) {
   double min_cdf = 0.0;
   for (int i = 0; i < 256; i++)
-	if (im_cdf[i] < min_cdf)
-	  min_cdf = im_cdf[i];
-
+	min_cdf = min(min_cdf, im_cdf[i]);
 
   for (int j = 0; j < h; j++)
 	for (int i = 0; i < w; i++) {

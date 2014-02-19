@@ -1,5 +1,5 @@
 #
-#  Makefile for Equalize 
+#  Makefile for Sphere_Normal 
 #
 
 
@@ -15,10 +15,10 @@ CC = g++
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $*.o $<
 
 
-ALL.O =  equalize.o figio.o 
+ALL.O =  sphere_normals_579.o figio.o 
 
-equalize: $(ALL.O)
+sphere_normals_579: $(ALL.O)
 	$(CC) $(CFLAGS) -o $@ $(ALL.O) $(INCLUDE) $(LIBDIR) $(LIBS)
 
 clean:
-	rm -f $(ALL.O) equalize *~
+	rm -f $(ALL.O) sphere_normals_579 *~
