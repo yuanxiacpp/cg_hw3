@@ -15,10 +15,10 @@ CC = g++
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $*.o $<
 
 
-ALL.O =  cpp_file_name_here.o figio.o 
+ALL.O =  equalize.o figio.o 
 
 program_name_here: $(ALL.O)
 	$(CC) $(CFLAGS) -o $@ $(ALL.O) $(INCLUDE) $(LIBDIR) $(LIBS)
 
 clean:
-	rm -f $(ALL.O) program_name_here 
+	rm -f $(ALL.O) equalize *~ 
