@@ -6,9 +6,12 @@ function view_normals_image(image)
     imshow(image_gray);
     
     normals = zeros(tot_row, tot_col, 3);
+    count = 0;
     
     for i=1:1:tot_row
         for j=1:1:tot_col
+            P = [i j]
+            
             r = double(image(i, j, 1));
             g = double(image(i, j, 2));
             b = image(i, j, 3);
@@ -29,7 +32,7 @@ function view_normals_image(image)
             end
             x = r/255;
             y = g/255;
-            z = 1-x*x-y*y;
+            z = sqrt(1-x*x-y*y)
             normals(i, j, 1) = x;
             normals(i, j, 2) = y;
             normals(i, j, 3) = z;

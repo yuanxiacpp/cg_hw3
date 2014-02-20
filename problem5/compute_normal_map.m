@@ -7,21 +7,25 @@ function out = compute_normal_map(image_structure)
     S = [];
     for i=1:1:length
         light = image_structure(i).vector;
+        image_structure(i).gray = rgb2gray(image_structure(i).image);
         S = [S; light];
     end
     
+    size(image_structure(i).gray)
+    C = inv(S' * S) * S';
+    
     [row, col] = size(S);
-    [height, width, rgb] = size(image_structure(1).image);
+    [height, width, rgb] = size(image_structure(1).image)
     out = zeros(height, width, 3);
-    for i=1:1:width
-        for j=1:1:height
+    for i=1:1:height
+        for j=1:1:width
             I = [];
             for k=1:1:length
-                gray = rgb2gray(image_structure(k).image);
-                I = [I; double(gray(i, j))];
+                %gray = rgb2gray(image_structure(k).image);
+                I = [I; double(image_structure(k).gray(i, j))];
             end
             %I = I/norm(I);
-            n = inv(S' * S) * S' * I;
+            n = C * I;
             r = uint8(abs(n(1)));
             g = uint8(abs(n(2)));
             b = 0;
@@ -34,9 +38,6 @@ function out = compute_normal_map(image_structure)
             out(i, j, 1) = r;
             out(i, j, 2) = g;
             out(i, j, 3) = b;
-            r
-            g
-            b
             
             
         end
