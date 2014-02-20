@@ -1,0 +1,47 @@
+function out = compute_normal_map(image_structure)
+
+    [count, length] = size(image_structure);
+    
+    
+    
+    S = [];
+    for i=1:1:length
+        light = image_structure(i).vector;
+        S = [S; light];
+    end
+    
+    [row, col] = size(S);
+    [height, width, rgb] = size(image_structure(1).image);
+    out = zeros(height, width, 3);
+    for i=1:1:width
+        for j=1:1:height
+            I = [];
+            for k=1:1:length
+                gray = rgb2gray(image_structure(k).image);
+                I = [I; double(gray(i, j))];
+            end
+            %I = I/norm(I);
+            n = inv(S' * S) * S' * I;
+            r = uint8(abs(n(1)));
+            g = uint8(abs(n(2)));
+            b = 0;
+            if (n(1) < 0)
+                b = b+128;
+            end
+            if (n(2) > 0)
+                b = b+64;
+            end
+            out(i, j, 1) = r;
+            out(i, j, 2) = g;
+            out(i, j, 3) = b;
+            r
+            g
+            b
+            
+            
+        end
+    end
+    
+    
+    
+end
