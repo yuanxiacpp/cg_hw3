@@ -1,16 +1,17 @@
 function view_normals_image(image)
-    %imshow(image)
+    %imshow(image);
     
     image_gray = rgb2gray(image);
     [tot_row, tot_col] = size(image_gray);
     imshow(image_gray);
     
-    normals = zeros(tot_row, tot_col, 3);
-    count = 0;
+    count = tot_col * tot_row;
+	normals = zeros(tot_row, tot_col, 3);
+   
     
     for i=1:1:tot_row
         for j=1:1:tot_col
-            P = [i j]
+            P = [i j];
             
             r = double(image(i, j, 1));
             g = double(image(i, j, 2));
@@ -30,14 +31,14 @@ function view_normals_image(image)
                 r = r;
                 g = 0 - g;
             end
-            x = r/255;
-            y = g/255;
-            z = sqrt(1-x*x-y*y)
+            x = double(r/255);
+            y = double(g/255);
+            z = (1-x^2-y^2);
             normals(i, j, 1) = x;
             normals(i, j, 2) = y;
             normals(i, j, 3) = z;
             %normals(i, j) = normals(i,j)/norm(normals(i,j))
-            
+            %normals = [normals; [x y z]];
         end
     end
     
@@ -69,7 +70,9 @@ function image_cick(~, ~, imageHandle, hSlider, normals, image_gray, tot_row, to
     light = light/norm(light)
     for i=1:1:tot_row
         for j=1:1:tot_col
-            image_gray(i, j) = 255 * light(1)*normals(i,j,1)+light(2)*normals(i,j,2)+light(3)*normals(i,j,3);
+			%index = 3*count;
+			%n = [normals(index+1) normals(index+2) normals(index+3)];
+	    	image_gray(i, j) = 255 * (light(1)*normals(i,j,1) + light(2)*normals(i,j,2) + light(3)*normals(i,j,3));
         end
     end
     
