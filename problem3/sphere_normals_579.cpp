@@ -70,7 +70,7 @@ unsigned char* sphere_normal(int size, int n) {
 	
 	for (int j = col-radius; j < col+radius; j++)
 	  for (int i = 0; i < size; i++) {
-		int index = 3*(j*size+i);
+		int index = 3*(i*size+j);
 
 		unsigned char r = 0;
 		unsigned char g = 0;
